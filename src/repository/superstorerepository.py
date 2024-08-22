@@ -24,7 +24,7 @@ class SuperStoreRepository:
             return superstore
 
     @staticmethod
-    async def get_all(self, rowid: int):
+    async def get_all(self):
         async with db as session:
             stmt = select(SuperStore)
             result = await session.execute(stmt)
