@@ -7,5 +7,6 @@ dependencies=[
     "psycopg2-binary",
     "python-dotenv",
     "strawberry-graphql[debug-server]",
-    "fastapi"
+    "fastapi",
+    "asyncpg"
 ]

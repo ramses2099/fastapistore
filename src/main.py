@@ -1,5 +1,8 @@
+from idlelib.window import add_windows_to_menu
+
 import uvicorn
 from fastapi import FastAPI
+from config import db
 
 def init_app():
     apps = FastAPI(
@@ -7,6 +10,14 @@ def init_app():
         description="Fast API",
         version="1.0.0"
     )
+
+    async def startup():
+        await db.create_all()
+    apps.add_event_handler("startup", startup)
+
+    async def shutdown():
+        await db.close()
+    apps.add_event_handler("shutdown", shutdown)
 
     @apps.get('/')
     def index():
