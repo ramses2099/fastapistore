@@ -10,33 +10,32 @@ from config import db
 class SuperStoreRepository:
 
     @staticmethod
-    async def create(self, superstore: SuperStore):
+    async def create(superstore: SuperStore):
         async with db as session:
             session.add(superstore)
         await db.commit_rollback()
 
     @staticmethod
-    async def get_by_id(self, rowid: int):
+    async def get_by_id(rowid: int):
         async with db as session:
             stmt = select(SuperStore).where(SuperStore.rowid == rowid)
             result = await session.execute(stmt)
-            superstore = result.scalar().first()
+            superstore = result.first()
             return superstore
 
     @staticmethod
-    async def get_all(self):
+    async def get_all():
         async with db as session:
-            stmt = select(SuperStore)
+            stmt = select(SuperStore).limit(1)
             result = await session.execute(stmt)
-            superstores = result.scalar().all()
-            return superstores
+            return result.all()
 
     @staticmethod
     async def update(self, rowid: int, sstore: SuperStore):
         async with db as session:
             stmt = select(SuperStore).where(SuperStore.rowid == rowid)
             result = await session.execute(stmt)
-            superstore = result.scalar().first()
+            superstore = result.first()
 
             superstore.orderid = sstore.orderid
             superstore.orderdate = sstore.orderdate

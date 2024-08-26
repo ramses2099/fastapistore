@@ -6,28 +6,28 @@ from schema import SuperStoreInputType, SuperStoreType
 class SuperStoreService:
     @staticmethod
     def superstore_superstoretype(superstore: SuperStore) -> SuperStoreType:
-        superstoreType = SuperStoreType()
-        superstoreType.rowid = superstore.rowid
-        superstoreType.orderid = superstore.orderid
-        superstoreType.orderdate = superstore.orderdate
-        superstoreType.shipdate = superstore.shipdate
-        superstoreType.shipmode = superstore.shipmode
-        superstoreType.customerid = superstore.customerid
-        superstoreType.customername = superstore.customername
-        superstoreType.segment = superstore.segment
-        superstoreType.country = superstore.country
-        superstoreType.city = superstore.city
-        superstoreType.state = superstore.state
-        superstoreType.postalcode = superstore.postalcode
-        superstoreType.region = superstore.region
-        superstoreType.productid = superstore.productid
-        superstoreType.category = superstore.category
-        superstoreType.subcategory = superstore.subcategory
-        superstoreType.productname = superstore.productname
-        superstoreType.sales = superstore.sales
-        superstoreType.quantity = superstore.quantity
-        superstoreType.discount = superstore.discount
-        superstoreType.profit = superstore.profit
+        print(superstore)
+        superstoreType = SuperStoreType(rowid = superstore.rowid,
+        orderid = superstore.orderid,
+        orderdate = superstore.orderdate,
+        shipdate = superstore.shipdate,
+        shipmode = superstore.shipmode,
+        customerid = superstore.customerid,
+        customername = superstore.customername,
+        segment = superstore.segment,
+        country = superstore.country,
+        city = superstore.city,
+        state = superstore.state,
+        postalcode = superstore.postalcode,
+        region = superstore.region,
+        productid = superstore.productid,
+        category = superstore.category,
+        subcategory = superstore.subcategory,
+        productname = superstore.productname,
+        sales = superstore.sales,
+        quantity = superstore.quantity,
+        discount = superstore.discount,
+        profit = superstore.profit)
         return superstoreType
 
     @staticmethod
@@ -59,13 +59,12 @@ class SuperStoreService:
 
         return superstoretype
 
+    # TODO here working in the service layer for send back the data
     @staticmethod
     async def get_all_superstore() -> list[SuperStoreType]:
-        list_superstore = []
-        list_su = await SuperStoreRepository.get_all()
-        for supersto in list_su:
-            list_superstore.append(SuperStoreService.superstore_superstoretype(supersto))
-        return list_superstore
+        list_superstore = await SuperStoreRepository.get_all()
+        list_of_sup =[s[0] for s in list_superstore]
+        return list_of_sup
 
     @staticmethod
     async def get_by_id_superstore(rowid: int) -> SuperStoreType:

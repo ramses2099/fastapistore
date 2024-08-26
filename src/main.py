@@ -1,8 +1,14 @@
-from idlelib.window import add_windows_to_menu
 
 import uvicorn
 from fastapi import FastAPI
+from strawberry.fastapi import GraphQLRouter
+from strawberry.schema import Schema
+
+from graphqlt.mutation import Mutation
+from graphqlt.query import Query
+
 from config import db
+
 
 def init_app():
     apps = FastAPI(
@@ -12,6 +18,7 @@ def init_app():
     )
 
     async def startup():
+        print('Start database table')
         await db.create_all()
     apps.add_event_handler("startup", startup)
 
@@ -22,6 +29,13 @@ def init_app():
     @apps.get('/')
     def index():
         return "Server is running"
+
+
+    # schema
+    schema = Schema(query=Query)
+    graphql_app = GraphQLRouter(schema)
+
+    apps.include_router(graphql_app, prefix='/graphql')
 
     return apps
 

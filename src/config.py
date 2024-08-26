@@ -4,6 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
 from dotenv import load_dotenv
 from sqlmodel import SQLModel
+from model.superstore import SuperStore
 
 load_dotenv()
 
