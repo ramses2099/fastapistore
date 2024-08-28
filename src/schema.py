@@ -5,6 +5,7 @@ import strawberry
 @strawberry.type
 class SuperStoreType:
     rowid: int
+    orderid: str
     orderdate: str
     shipdate: str
     shipmode: str
