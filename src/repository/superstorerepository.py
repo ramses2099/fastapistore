@@ -24,9 +24,9 @@ class SuperStoreRepository:
             return superstore
 
     @staticmethod
-    async def get_all():
+    async def get_all(limit: int, offset: int):
         async with db as session:
-            stmt = select(SuperStore).limit(1)
+            stmt = select(SuperStore).limit(limit).offset(offset)
             result = await session.execute(stmt)
             return result.all()
 

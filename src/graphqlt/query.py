@@ -8,13 +8,9 @@ from service.superstoreservice import SuperStoreService
 @strawberry.type
 class Query:
 
-    @strawberry.field()
-    def hello(self) -> str:
-        return "hello hello"
-
     @strawberry.field
-    async def get_all(self) -> list[SuperStoreType]:
-        return await SuperStoreService.get_all_superstore()
+    async def get_all(self,limit: int, offset: int) -> list[SuperStoreType]:
+        return await SuperStoreService.get_all_superstore(limit, offset)
 
     @strawberry.field
     async def get_by_id(self, rowid: int) -> SuperStoreType:
