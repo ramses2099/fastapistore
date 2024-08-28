@@ -32,7 +32,7 @@ def init_app():
 
 
     # schema
-    schema = Schema(query=Query)
+    schema = Schema(query=Query, mutation=Mutation)
     graphql_app = GraphQLRouter(schema)
 
     apps.include_router(graphql_app, prefix='/graphql')

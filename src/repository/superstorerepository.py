@@ -12,13 +12,22 @@ class SuperStoreRepository:
     @staticmethod
     async def create(superstore: SuperStore):
         async with db as session:
-            session.add(superstore)
-        await db.commit_rollback()
+            async with session.begin():
+                session.add(superstore)
+            await db.commit_rollback()
 
     @staticmethod
     async def get_by_id(rowid: int):
         async with db as session:
             stmt = select(SuperStore).where(SuperStore.rowid == rowid)
+            result = await session.execute(stmt)
+            superstore = result.first()
+            return superstore
+
+    @staticmethod
+    async def get_last_rowid():
+        async with db as session:
+            stmt = select(SuperStore).order_by(SuperStore.rowid.desc()).limit(1)
             result = await session.execute(stmt)
             superstore = result.first()
             return superstore

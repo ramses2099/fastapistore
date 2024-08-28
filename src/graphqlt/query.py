@@ -15,3 +15,7 @@ class Query:
     @strawberry.field
     async def get_by_id(self, rowid: int) -> SuperStoreType:
         return await SuperStoreService.get_by_id_superstore(rowid)
+
+    @strawberry.field
+    async def get_lat_rowid(self) -> int:
+        return await SuperStoreService.get_last_superstore_rowid()
